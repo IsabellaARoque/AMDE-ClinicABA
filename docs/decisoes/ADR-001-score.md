@@ -4,7 +4,7 @@
 
 ## Contexto
 
-O domínio não define score como porcentagem e a clínica é responsável por avaliá-lo. Ao mesmo tempo, os resultados dos treinos precisam compor um acumulado por categoria.
+O levantamento acadêmico original, especialmente RF20, RF22 e RF23, previa que o score da sessão fosse a soma dos scores dos treinos. A clínica esclareceu posteriormente que score não é porcentagem, que apenas os scores dos treinos são somados por categoria e que o score final da sessão é preenchido separadamente.
 
 ## Decisão
 
@@ -16,4 +16,4 @@ O domínio não define score como porcentagem e a clínica é responsável por a
 
 ## Consequências
 
-Interfaces não exibem `%` nem impõem faixa clínica arbitrária. `ScorePorCategoria.valor` permanece `Double` por compatibilidade com o modelo legado e deve ser revisto em uma migração futura.
+Esta decisão substitui a parte de RF20, RF22, RF23 e dos casos UC16 e UC18 que determina soma automática no score final. Interfaces não exibem `%` nem impõem faixa clínica arbitrária. `ScorePorCategoria.valor` permanece `Double` por compatibilidade com o modelo legado e deve ser revisto em uma migração futura.

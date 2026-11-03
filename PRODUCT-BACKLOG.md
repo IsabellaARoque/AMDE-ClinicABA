@@ -16,6 +16,9 @@ Atualizado em 2026-11-03. Não contém dados de pacientes nem credenciais.
 | PB-10 | P3 | A esclarecer | Criar gráficos de evolução. | Métrica, período, público e interpretação clínica aprovados antes da implementação. |
 | PB-11 | P3 | A esclarecer | Avaliar novos campos clínicos das referências. | Clínica decide quais dados são necessários e autoriza modelo, API e interface. |
 | PB-12 | P2 | Planejado | Restringir CORS por ambiente. | Produção aceita apenas origens configuradas e desenvolvimento continua funcional. |
+| PB-13 | P1 | A esclarecer | Definir papéis Administrador e Profissional. | Equipe decide a matriz de permissões e API e interfaces passam a aplicá-la. |
+| PB-14 | P1 | Planejado | Proteger criação e edição de treinos por propriedade do plano. | Somente profissional autorizado modifica treinos do plano. |
+| PB-15 | P2 | A esclarecer | Decidir observações do assistido, do plano e objetivo da sessão. | Clínica confirma os campos e, se aprovados, modelo, API e telas são atualizados. |
 
 ## Itens concluídos nesta etapa
 

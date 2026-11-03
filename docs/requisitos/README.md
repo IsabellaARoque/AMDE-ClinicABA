@@ -1,68 +1,77 @@
-# Requisitos e rastreabilidade
+# Requisitos e aderência ao sistema
 
-## Atores
+Este catálogo preserva a identificação do levantamento acadêmico entregue pela equipe. A coluna **Aderência** compara cada requisito com o código atual. Quando uma decisão posterior alterou o requisito, ela é registrada sem apresentar o texto antigo como comportamento vigente.
 
-- **Profissional:** pessoa autenticada que cadastra pacientes, organiza planos e registra atendimentos.
-- **Paciente/assistido:** pessoa cujo acompanhamento é registrado. Não possui acesso próprio na versão atual.
+## Atores definidos no levantamento
+
+- **Administrador:** cadastro e edição de profissionais e pacientes e demais funções administrativas.
+- **Profissional:** acompanhamento dos pacientes, planos, treinos, sessões, resultados e exportação. O documento define que este ator também herda as funções do Administrador.
+
+**Aderência atual:** a entidade `Profissional` não possui papel ou autoridade diferenciada e a API não implementa um ator Administrador separado. Toda pessoa autenticada possui o mesmo conjunto técnico de permissões, sujeito apenas às regras de propriedade de planos e sessões. O cadastro de profissional é público em `/api/auth/register`.
 
 ## Requisitos funcionais
 
-| ID | Requisito | Critério de aceite resumido |
-|---|---|---|
-| RF-01 | Autenticar e cadastrar profissionais. | Cadastro gera acesso e login válido retorna token JWT. |
-| RF-02 | Consultar e atualizar o perfil profissional. | Usuário autenticado lê e altera seus próprios dados permitidos. |
-| RF-03 | Cadastrar, consultar e editar pacientes. | CPF é único e os dados persistem no PostgreSQL. |
-| RF-04 | Criar, consultar, editar, ativar e desativar planos. | Plano pertence a um paciente e registra seu profissional criador. |
-| RF-05 | Criar e editar treinos por frequência ou duração. | Treino pertence a um plano e a uma categoria. |
-| RF-06 | Iniciar e configurar uma sessão. | Sessão registra paciente, plano, profissional, data e horário inicial; treinos podem ser selecionados. |
-| RF-07 | Registrar treino de frequência. | São persistidas as quantidades sem ajuda, com ajuda e não executado. |
-| RF-08 | Registrar treino de duração. | A duração em segundos é persistida para o treino da sessão. |
-| RF-09 | Encerrar treino com score e observação. | Score inteiro manual e observação ficam associados ao treino realizado. |
-| RF-10 | Encerrar sessão com score final e observação. | Horário final é registrado; score final é informado manualmente e não deriva dos treinos. |
-| RF-11 | Consultar histórico e detalhes das sessões. | Histórico por paciente e detalhes dos treinos são exibidos. |
-| RF-12 | Exportar uma sessão em PDF. | API devolve um PDF identificado pela sessão. |
-| RF-13 | Retomar sessão em aberto no mobile. | Sessão sem horário final e pertencente ao profissional pode ser reaberta pelo histórico. |
+| ID | Requisito acadêmico | Plataforma | Aderência ao código atual |
+|---|---|---|---|
+| RF01 | Cadastrar profissional | Site | **Parcial.** Cadastro existe, mas não é restrito a Administrador. |
+| RF02 | Autenticar usuário | Site e Mobile | **Implementado.** Login com JWT nas duas interfaces. |
+| RF03 | Visualizar perfil de usuário | Site e Mobile | **Implementado.** Endpoint e telas de perfil disponíveis. |
+| RF04 | Editar usuário | Site | **Implementado.** Usuário altera o próprio perfil. |
+| RF05 | Cadastrar assistido | Site | **Parcial.** Cadastro existe; observações gerais não fazem parte da entidade ou do contrato. Não há papel Administrador. |
+| RF06 | Editar assistido | Site | **Implementado** para os campos persistidos atualmente. |
+| RF07 | Visualizar assistidos disponíveis | Site e Mobile | **Parcial.** Lista existe, mas `Assistido` não possui estado ativo/inativo para filtrar disponibilidade. |
+| RF08 | Visualizar perfil do assistido | Site e Mobile | **Implementado.** Dados, scores, planos e histórico podem ser acessados. |
+| RF09 | Criar plano terapêutico | Site | **Parcial.** Nome, objetivo, criador e data existem; observação própria do plano não existe. |
+| RF10 | Alterar plano terapêutico | Site | **Implementado.** Somente o criador pode alterar. |
+| RF11 | Visualizar plano e treinos | Site e Mobile | **Implementado.** |
+| RF12 | Desativar plano terapêutico | Site | **Implementado.** Somente o criador pode desativar. |
+| RF13 | Reativar plano terapêutico | Site | **Implementado.** Somente o criador pode reativar. |
+| RF14 | Cadastrar treino | Site | **Implementado e ampliado.** Também pode ser criado no fluxo mobile; objetivo e atividade complementam os campos previstos. |
+| RF15 | Alterar treino | Site | **Parcial.** Edição existe, mas o backend não valida se o treino pertence a plano criado pelo profissional atual. |
+| RF16 | Iniciar sessão e registrar paciente, profissional, data e hora | Mobile | **Implementado.** |
+| RF17 | Configurar objetivo, plano e treinos da sessão | Mobile | **Parcial.** Plano é definido na abertura e treinos são configurados; objetivo livre da sessão não é persistido. |
+| RF18 | Escolher e iniciar treinos dentro da sessão | Mobile | **Implementado.** Observação geral é registrada no encerramento. |
+| RF19 | Executar treino de frequência ou duração e registrar score | Mobile | **Implementado.** Inclui frequência, cronômetro, observação e score inteiro manual. |
+| RF20 | Encerrar sessão e calcular score pela soma dos treinos | Mobile | **Substituído parcialmente.** Horário e informações são gravados, mas o score final é manual conforme decisão posterior [ADR-001](../decisoes/ADR-001-score.md). |
+| RF21 | Visualizar histórico de sessões | Site e Mobile | **Implementado.** |
+| RF22 | Visualizar detalhes e score somado da sessão | Site e Mobile | **Parcial.** Detalhes existem; o score final exibido é manual e separado. |
+| RF23 | Editar sessão própria em até 24 horas e recalcular score | Site | **Parcial.** Propriedade é validada; API compara dias corridos, não 24 horas exatas; contrato de edição atual altera apenas observação e score final. |
+| RF24 | Exportar sessão em PDF | Site | **Implementado.** Homologação completa do conteúdo do PDF continua pendente. |
+| RF25 | Consultar e analisar evolução por gráficos e tabelas | Fora do escopo | **Não implementado**, conforme o próprio levantamento. |
 
 ## Requisitos não funcionais
 
-| ID | Requisito | Verificação esperada |
+| ID | Requisito acadêmico | Aderência e evidência |
 |---|---|---|
-| RNF-01 | API protegida por autenticação stateless com JWT. | Apenas `/api/auth/**` é público. |
-| RNF-02 | Senhas armazenadas com hash BCrypt. | Senha não é persistida em texto simples. |
-| RNF-03 | Interfaces responsivas e acessíveis por teclado. | Portal se adapta a desktop e telas estreitas; controles têm foco visível. |
-| RNF-04 | Formulários mobile utilizáveis com teclado aberto. | Campo focado e ação de salvar permanecem alcançáveis por rolagem. |
-| RNF-05 | Persistência relacional em PostgreSQL. | Dados sobrevivem à recriação dos contêineres quando o volume é preservado. |
-| RNF-06 | Builds reproduzíveis por Docker para API e web. | `docker compose build` conclui com as dependências declaradas. |
-| RNF-07 | Falhas de rede não devem deixar carregamento indefinido. | Interfaces exibem erro e, nos fluxos principais, ação de nova tentativa. |
+| RNF01 | Responder às ações em menos de 2 segundos | **Não comprovado.** Não há ensaio de desempenho registrado. |
+| RNF02 | Interface mobile simples e intuitiva | **Em validação.** Interface foi modernizada; avaliação com usuários não foi registrada. |
+| RNF03 | Exigir poucos passos para registrar informações | **Em validação.** Fluxos foram simplificados, mas não há métrica formal. |
+| RNF04 | Proteger contra acesso não autorizado | **Parcial.** JWT, BCrypt e propriedade de recursos existem; papéis, CORS de produção e credencial inicial ainda exigem revisão. |
+| RNF05 | Apenas o autor pode editar sua sessão | **Implementado** no serviço de sessão. |
+| RNF06 | Preservar integridade dos registros | **Parcial.** Persistência e atualização por diferença de score existem; faltam testes de integração e migrações. |
+| RNF07 | Manter desempenho com aumento de volume | **Não comprovado.** Não há teste de carga. |
+| RNF08 | Impedir cadastro duplicado de assistido | **Implementado** por CPF único e validação de persistência. |
+| RNF09 | Diferenciar dados ativos e desativados | **Parcial.** Planos possuem status; pacientes e outros registros não possuem estado equivalente. |
+| RNF10 | Somente responsável desativa ou reativa plano | **Implementado.** |
 
-## Regras de negócio
+## Regras vigentes complementares
 
-| ID | Regra |
-|---|---|
-| RN-01 | CPF e e-mail do profissional são únicos; CPF do paciente também é único. |
-| RN-02 | Apenas o criador pode alterar, ativar ou desativar um plano. |
-| RN-03 | Apenas o profissional responsável pode modificar a sessão e seus registros. |
-| RN-04 | Um plano novo inicia com status `ATIVO`. |
-| RN-05 | Não é permitido adicionar treino a uma sessão encerrada. |
-| RN-06 | O tipo do registro deve corresponder à medição do treino: `FREQUENCIA` ou `DURACAO`. |
-| RN-07 | O score de treino é um número inteiro informado pela clínica; não representa porcentagem. |
-| RN-08 | Os scores dos treinos atualizam a soma acumulada do paciente por categoria. Ao reeditar um treino, aplica-se apenas a diferença para evitar soma duplicada. |
-| RN-09 | O score final da sessão é manual, separado e nunca calculado a partir dos scores dos treinos. |
-| RN-10 | Score zero é um resultado concluído válido. |
-| RN-11 | A API restringe a edição de sessão encerrada usando a data da sessão. A mensagem cita 24 horas, mas a implementação atual compara dias corridos; alinhar a regra é item de backlog. |
+- O score de treino é inteiro manual e não representa porcentagem.
+- Scores de treinos atualizam a soma acumulada do paciente por categoria.
+- Ao reeditar um score de treino, aplica-se apenas a diferença em relação ao valor anterior.
+- O score final da sessão é manual e independente da soma por categoria.
+- Score zero é resultado concluído válido.
+- Não é permitido adicionar treino a uma sessão encerrada.
+- O registro deve corresponder ao tipo `FREQUENCIA` ou `DURACAO` do treino.
 
-## Rastreabilidade
+## Rastreabilidade resumida
 
-| Requisito | API | Web | Mobile | Evidência atual |
+| Faixa | Backend | Web | Mobile | Evidência atual |
 |---|---|---|---|---|
-| RF-01/02 | `AuthController`, `ProfissionalController` | login, cadastro, perfil | login e perfil | Build web e typecheck mobile. |
-| RF-03 | `AssistidoController` | cadastro, lista e detalhes | lista e detalhes | Busca mobile/web e carregamento da API. |
-| RF-04/05 | controllers de plano e treino | formulários e detalhes | detalhes e criação integrada | Fluxos implementados; QA manual completa pendente. |
-| RF-06 a RF-10 | `SessaoController` e `SessaoService` | edição e detalhes | fluxo de atendimento | Testes de regressão mobile para estados e scores. |
-| RF-11 | endpoints por paciente e sessão | histórico e detalhes | histórico e detalhes | Implementado nas duas plataformas. |
-| RF-12 | `/sessoes/{id}/exportar-pdf` | ação Exportar PDF | não exposto | Validação funcional do download pendente. |
-| RF-13 | consulta de sessões abertas | não aplicável | histórico mobile | Implementado; QA em aparelho pendente. |
+| RF01–RF04 | autenticação e profissional | login, cadastro e perfil | login e perfil | Builds e checagem de tipos; papéis pendentes. |
+| RF05–RF08 | `AssistidoController` | cadastro, lista e detalhe | lista e detalhe | Busca, dados e estados de interface implementados. |
+| RF09–RF15 | planos e treinos | planejamento e edição | consulta e criação integrada | Propriedade de treino precisa de reforço. |
+| RF16–RF20 | `SessaoController` e `SessaoService` | consulta posterior | atendimento completo | Regressões mobile; QA física pendente. |
+| RF21–RF24 | histórico, edição e PDF | histórico, edição e exportação | histórico e detalhes | PDF e janela temporal ainda precisam de homologação. |
 
-## Campos ainda não suportados
-
-Nível de suporte, telefone do responsável, período do plano e objetivo livre da sessão apareceram nas referências visuais, mas não pertencem aos contratos atuais da API. Não devem ser exibidos como dados persistidos até que requisitos e modelo sejam aprovados.
+O arquivo Word original permanece fora do repositório. Este catálogo Markdown é a versão rastreável mantida com o código. Para alterações futuras, requisitos, casos de uso e decisões devem ser revisados em conjunto.

@@ -1,6 +1,6 @@
 # Modelo de dados
 
-O backend utiliza JPA/Hibernate com PostgreSQL. O diagrama representa as entidades atuais; nomes físicos podem variar conforme a estratégia do Hibernate.
+O backend utiliza JPA/Hibernate com PostgreSQL. Este modelo foi extraído das entidades atuais e substitui, para fins técnicos, o diagrama de classes anterior enviado pela equipe. Nomes físicos podem variar conforme a estratégia do Hibernate.
 
 ```mermaid
 erDiagram

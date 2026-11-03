@@ -25,6 +25,10 @@ A referência desta etapa é a branch `development` no commit `23c6844`. Ela já
 | Web | Identidade alinhada ao mobile, responsividade, navegação e cartões modernizados. |
 | Documentação | Requisitos, casos, arquitetura, dados, testes, decisões, backlog e rastreabilidade. |
 
+## Fontes acadêmicas incorporadas
+
+O levantamento com RF01 a RF25 e a especificação com UC01 a UC20 foram preservados em `docs/requisitos` e `docs/casos-de-uso`. A documentação Markdown confronta essas fontes com o código atual. O diagrama de classes recebido foi identificado pela equipe como anterior ao modelo vigente e não foi adotado; o DER técnico deriva das entidades Java atuais.
+
 ## Compatibilidade preservada
 
 - Contratos principais da API foram mantidos.

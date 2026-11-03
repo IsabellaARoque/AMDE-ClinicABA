@@ -16,6 +16,13 @@ Esta pasta reúne a documentação técnica e funcional do ClinicABA. O conteúd
 | [Continuidade](continuidade/README.md) | Linha de base e evolução realizada nesta etapa. |
 | [Backlog](backlog/README.md) | Forma de organização e ligação com o backlog do produto. |
 
+## Fontes acadêmicas recebidas
+
+- Levantamento de requisitos com RF01 a RF25.
+- Especificação dos casos de uso com UC01 a UC20.
+
+Os arquivos Word originais não são versionados, conforme a orientação de manter em `docs/` apenas os artefatos úteis para a entrega. Os respectivos `README.md` preservam o catálogo acadêmico, registram a aderência ao código e as decisões posteriores. O diagrama de classes enviado com esses documentos representa uma versão anterior e, por orientação da equipe, não integra esta linha de base.
+
 ## Documento acadêmico
 
 O template institucional, `tg.docx` e `tg.pdf` não estão versionados neste repositório. Quando forem fornecidos pela equipe, devem permanecer nesta pasta, com data ou versão que permita identificar a correspondência entre o documento editável e o PDF exportado. A estrutura do template institucional deve ser preservada.
