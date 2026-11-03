@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Text, View, Alert } from 'react-native';
+import { Text, View, Alert, Platform } from 'react-native';
 import { sessaoService } from '../services/sessaoService';
 import { getApiErrorMessage } from '../services/getApiErrorMessage';
 import { FormField, FormScreen } from '../components/FormScreen';
@@ -17,7 +17,7 @@ const EncerrarSessaoScreen = ({ route, navigation }: any) => {
   const encerrar = async () => {
     if (lock.current) return;
     if (!isValidScore(score)) {
-      Alert.alert('Confira o score final', 'Informe um número inteiro entre 0 e 100.');
+      Alert.alert('Confira o score final', 'Informe um número inteiro válido.');
       return;
     }
     lock.current = true;
@@ -53,13 +53,12 @@ const EncerrarSessaoScreen = ({ route, navigation }: any) => {
           editable={!saving}
         />
         <FormField
-          label="Score final da sessão (%) *"
-          hint="Informe um número inteiro entre 0 e 100."
+          label="Score final da sessão *"
+          hint="Valor inteiro informado pela clínica."
           placeholder="Ex.: 85"
           value={score}
           onChangeText={setScore}
-          keyboardType="number-pad"
-          maxLength={3}
+          keyboardType={Platform.OS === 'ios' ? 'numbers-and-punctuation' : 'numeric'}
           editable={!saving}
           returnKeyType="done"
         />

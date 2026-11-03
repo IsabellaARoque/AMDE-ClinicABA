@@ -24,9 +24,7 @@ export const SessaoCard = ({ sessao, onPress }: { sessao: SessaoResumo; onPress:
     <Text style={UI.body}>{sessao.planoNome}</Text>
     <View style={[UI.row, { justifyContent: 'space-between' }]}>
       <Text style={styles.score}>
-        {sessao.horaFim && sessao.score != null
-          ? 'Score: ' + sessao.score + '%'
-          : 'Sessão em andamento'}
+        {sessao.horaFim && sessao.score != null ? 'Score: ' + sessao.score : 'Sessão em andamento'}
       </Text>
       <Text style={styles.link}>Visualizar →</Text>
     </View>

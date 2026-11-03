@@ -5,7 +5,7 @@ import { ScorePorCategoria } from '../types';
 export const ScoreCard = ({ score }: { score: ScorePorCategoria }) => (
   <View style={styles.card}>
     <Text style={styles.title}>{score.categoria.nome}</Text>
-    <Text style={styles.value}>{score.valor.toLocaleString('pt-BR')} pts</Text>
+    <Text style={styles.value}>{score.valor.toLocaleString('pt-BR')}</Text>
   </View>
 );
 const styles = StyleSheet.create({

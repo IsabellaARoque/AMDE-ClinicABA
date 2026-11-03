@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Alert, AppState } from 'react-native';
+import { View, Text, StyleSheet, Alert, AppState, Platform } from 'react-native';
 import { treinoService } from '../services/treinoService';
 import { getApiErrorMessage } from '../services/getApiErrorMessage';
 import { FormField, FormScreen } from '../components/FormScreen';
@@ -61,7 +61,7 @@ const ExecutarTreinoDuracaoScreen = ({ route, navigation }: any) => {
   const salvar = async () => {
     if (lock.current || running) return;
     if (!isValidScore(score)) {
-      Alert.alert('Confira o score', 'Informe um número inteiro entre 0 e 100.');
+      Alert.alert('Confira o score', 'Informe um número inteiro válido.');
       return;
     }
     lock.current = true;
@@ -123,13 +123,12 @@ const ExecutarTreinoDuracaoScreen = ({ route, navigation }: any) => {
         editable={!saving}
       />
       <FormField
-        label="Score do treino (%) *"
-        hint="Informe um número inteiro entre 0 e 100."
+        label="Score do treino *"
+        hint="Valor inteiro informado pela clínica."
         placeholder="Ex.: 85"
         value={score}
         onChangeText={setScore}
-        keyboardType="number-pad"
-        maxLength={3}
+        keyboardType={Platform.OS === 'ios' ? 'numbers-and-punctuation' : 'numeric'}
         editable={!saving}
         returnKeyType="done"
       />

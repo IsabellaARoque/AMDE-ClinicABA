@@ -69,7 +69,7 @@ const SessaoDetailScreen = ({ route, navigation }: any) => {
       <View style={[UI.card, { gap: 10 }]}>
         <Text style={UI.label}>Score geral</Text>
         <Text style={[UI.title, { color: Colors.primaryDark }]}>
-          {sessao.horaFim && sessao.score != null ? sessao.score + '%' : 'Ainda não finalizado'}
+          {sessao.horaFim && sessao.score != null ? sessao.score : 'Ainda não finalizado'}
         </Text>
         <View style={UI.divider} />
         <Text style={UI.label}>Observações gerais</Text>
@@ -108,9 +108,7 @@ const SessaoDetailScreen = ({ route, navigation }: any) => {
             <Text style={UI.heading}>Duração: {formatClock(item.registroDuracao.duracao)}</Text>
           )}
           <View style={UI.divider} />
-          <Text style={UI.label}>
-            Score: {item.score != null ? item.score + '%' : 'Não informado'}
-          </Text>
+          <Text style={UI.label}>Score: {item.score != null ? item.score : 'Não informado'}</Text>
           <Text style={UI.body}>{item.observacoes || 'Nenhuma observação registrada.'}</Text>
         </View>
       ))}

@@ -10,9 +10,15 @@ import {
 import { focusedScrollTarget } from '../src/utils/keyboard.ts';
 import { sessionTrainingGroups } from '../src/utils/session.ts';
 
-test('score aceita zero e cem, rejeita valores fora da escala e formatos ambíguos', () => {
-  for (const value of ['0', '85', '100', ' 0 ']) assert.equal(isValidScore(value), true, value);
-  for (const value of ['', ' ', '-1', '101', '1.5', '1,5', '1e2', 'Infinity', 'NaN'])
+test('score aceita inteiros informados pela clínica, inclusive acima de cem', () => {
+  for (const value of ['0', '85', '100', '101', '250', '1000', '-5', ' 0 '])
+    assert.equal(isValidScore(value), true, value);
+  for (const value of ['', ' ', '-', '1.0', '1.5', '1,5', '1e2', 'Infinity', 'NaN'])
+    assert.equal(isValidScore(value), false, value);
+});
+test('score preserva os limites técnicos do inteiro da API sem arredondar valores', () => {
+  for (const value of ['2147483647', '-2147483648']) assert.equal(isValidScore(value), true, value);
+  for (const value of ['2147483648', '-2147483649', '99999999999999999999'])
     assert.equal(isValidScore(value), false, value);
 });
 test('datas do servidor preservam o dia sem conversão de fuso', () => {

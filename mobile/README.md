@@ -16,10 +16,10 @@ O celular e o computador devem estar na mesma rede. O backend precisa estar aces
 O tema em `src/theme` segue as referências fornecidas: azul claro, cartões arredondados, detalhes em amarelo e navegação com identificação por ícones e texto. Os componentes em `src/components` concentram botões, campos, estados vazios e formulários.
 
 - Pacientes: busca sem diferenciação de acentos, atualização ao puxar, erros com nova tentativa.
-- Paciente: dados reais da API, responsável, planos, sessões recentes e scores acumulados por categoria em pontos.
+- Paciente: dados reais da API, responsável, planos, sessões recentes e soma dos scores dos treinos por categoria.
 - Plano: objetivo, treinos existentes e criação de um novo treino.
 - Nova sessão: escolha de plano e seleção de treinos em uma única janela, com criação de treino integrada.
-- Atendimento: seleção e conclusão de treino são estados distintos. Score zero é um resultado válido.
+- Atendimento: seleção e conclusão de treino são estados distintos. O score é um inteiro informado pela clínica, incluindo zero e valores acima de 100. Os scores dos treinos são somados por categoria; o score final da sessão é informado separadamente.
 - Histórico: sessões em aberto podem ser retomadas pelo profissional responsável.
 
 Nível de suporte, telefone do responsável, período do plano e objetivo livre da sessão aparecem nas referências, mas ainda não fazem parte dos contratos da API. A interface não inventa esses dados nem mostra campos que não possam ser salvos.
@@ -39,7 +39,7 @@ npm run typecheck
 npm run check:ui
 ```
 
-Os testes de regressão cobrem a escala de score, datas, idade, busca, geometria da rolagem e distinção entre treino selecionado e concluído, inclusive registros antigos duplicados.
+Os testes de regressão cobrem a validação de scores inteiros, datas, idade, busca, geometria da rolagem e distinção entre treino selecionado e concluído, inclusive registros antigos duplicados.
 
 ### Conferir no aparelho
 

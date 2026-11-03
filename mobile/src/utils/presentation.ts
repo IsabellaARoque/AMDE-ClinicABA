@@ -23,7 +23,12 @@ export function normalizeSearch(value: string): string {
     .toLowerCase();
 }
 export function isValidScore(value: string): boolean {
-  return /^\d{1,3}$/.test(value.trim()) && Number(value) >= 0 && Number(value) <= 100;
+  const input = value.trim();
+  const score = Number(input);
+  // Match the Integer type accepted by the API, without imposing a clinical scale.
+  return (
+    /^-?\d+$/.test(input) && Number.isInteger(score) && score >= -2147483648 && score <= 2147483647
+  );
 }
 export function formatClock(seconds: number): string {
   const value = Math.max(0, Math.floor(seconds));
