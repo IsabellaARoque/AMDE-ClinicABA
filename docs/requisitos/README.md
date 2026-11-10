@@ -75,3 +75,10 @@ Este catálogo preserva a identificação do levantamento acadêmico entregue pe
 | RF21–RF24 | histórico, edição e PDF | histórico, edição e exportação | histórico e detalhes | PDF e janela temporal ainda precisam de homologação. |
 
 O arquivo Word original permanece fora do repositório. Este catálogo Markdown é a versão rastreável mantida com o código. Para alterações futuras, requisitos, casos de uso e decisões devem ser revisados em conjunto.
+# Artefato — Requisitos do Sistema
+
+Esta pasta armazena a especificação de Requisitos de Software da solução.
+
+## Conteúdo desta Pasta
+
+- **[`especificacao-requisitos-AMDE.md`](especificacao-requisitos-AMDE.md):** Matriz padronizada de Requisitos Funcionais (RF), Requisitos Não Funcionais (RNF) e Regras de Negócio (RN), com rastreabilidade direta para os Casos de Uso.
